@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: appdemo-deployment
+  name: appdemo1-deployment
   labels:
-    app: appdemo
+    app: appdemo1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: appdemo
+      app: appdemo1
   template:
     metadata:
       labels:
-        app: appdemo
+        app: appdemo1
     spec:
       containers:
-        - name: appdemo 
-          image: appdemoacs.azurecr.io/myprojectappdemo
+        - name: appdemo1 
+          image: appdemo1acs.azurecr.io/myprojectappdemo
           imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -26,13 +26,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: appdemo-loadbalancer-service
+  name: appdemo1-loadbalancer-service
   labels:
-    app: appdemo
+    app: appdemo1
 spec:
   type: LoadBalancer
   selector:
-    app: appdemo
+    app: appdemo1
   ports:
     - port: 80
       targetPort: 80

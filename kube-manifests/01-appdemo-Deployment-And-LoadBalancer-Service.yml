@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appdemo-deployment
+  labels:
+    app: appdemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appdemo
+  template:
+    metadata:
+      labels:
+        app: appdemo
+    spec:
+      containers:
+        - name: appdemo 
+          image: appdemoacs.azurecr.io/myprojectappdemo
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      imagePullSecrets:   # Update Image Pull Secret Name we creted
+        - name: appdemo-secret  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: appdemo-loadbalancer-service
+  labels:
+    app: appdemo
+spec:
+  type: LoadBalancer
+  selector:
+    app: appdemo
+  ports:
+    - port: 80
+      targetPort: 80
+        
